@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.paranoidalien.game.managers.GameInputProcessor;
 import com.paranoidalien.game.managers.GameKeys;
+import com.paranoidalien.game.managers.GameStateManager;
 
 public class Game implements ApplicationListener {
 
@@ -17,6 +18,7 @@ public class Game implements ApplicationListener {
     public static int HEIGHT;
 
     public static OrthographicCamera cam;
+    private GameStateManager gsm;
 
 
     @Override
@@ -29,6 +31,7 @@ public class Game implements ApplicationListener {
         cam.update();
 
         Gdx.input.setInputProcessor(new GameInputProcessor());
+        gsm = new GameStateManager();
     }
 
     @Override
@@ -38,11 +41,8 @@ public class Game implements ApplicationListener {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
-        if(GameKeys.isPressed(GameKeys.SPACE)) {
-            System.out.println("SPACE");
-        }
+        gsm.update(Gdx.graphics.getDeltaTime());
+        gsm.draw();
 
         GameKeys.update();
 
