@@ -1,5 +1,8 @@
 package com.paranoidalien.game.gamestates;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.paranoidalien.game.entities.Player;
+import com.paranoidalien.game.managers.GameKeys;
 import com.paranoidalien.game.managers.GameStateManager;
 
 /**
@@ -8,29 +11,38 @@ import com.paranoidalien.game.managers.GameStateManager;
  */
 public class PlayState extends GameState{
 
+    private ShapeRenderer sr;
+    private Player player;
+
+
     public PlayState (GameStateManager gsm){
         super(gsm);
-        init();
     }
 
     @Override
     public void init() {
-
+        sr = new ShapeRenderer();
+        player = new Player();
     }
 
     @Override
     public void update(float dt) {
-        System.out.println("PlayState updating");
+        handleInput();
+        player.update(dt);
+
     }
 
     @Override
     public void draw() {
-        System.out.println("PlayState drawing");
+        player.draw(sr);
+
     }
 
     @Override
     public void handleInput() {
-
+        player.setLeft(GameKeys.isDown(GameKeys.LEFT));
+        player.setRight(GameKeys.isDown(GameKeys.RIGHT));
+        player.setUp(GameKeys.isDown(GameKeys.UP));
     }
 
     @Override
